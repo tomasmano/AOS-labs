@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="BookStore" targetNamespace="http://j2ee.netbeans.org/wsdl/lab05BookStoreTopToDown/java/BookStore"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/lab05BookStoreTopToDown/java/BookStore" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <types>
+        <xsd:schema targetNamespace="http://j2ee.netbeans.org/wsdl/lab05BookStoreTopToDown/java/BookStore" xmlns:tns="http://j2ee.netbeans.org/wsdl/lab05BookStoreTopToDown/java/BookStore">
+            <xsd:complexType name="Book">
+                <xsd:sequence>
+                    <xsd:element name="isbn" type="xsd:string"></xsd:element>
+                    <xsd:element name="title" type="xsd:string"></xsd:element>
+                    <xsd:element name="author" type="xsd:string"></xsd:element>
+                    <xsd:element name="notes" type="xsd:string"></xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="BookCollection">
+                <xsd:sequence>
+                    <xsd:element name="book" type="tns:Book" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </types>
+    <message name="removeBookRequest">
+        <part name="book" type="xsd:string"/>
+    </message>
+    <message name="addBookRequest">
+        <part name="book" type="tns:Book"/>
+    </message>
+    <message name="updateBookRequest">
+        <part name="book" type="tns:Book"/>
+    </message>
+    <message name="sizeOfOutput">
+        <part name="size" type="xsd:int"/>
+    </message>
+    <message name="listAllBooksResponse">
+        <part name="part1" type="tns:BookCollection"/>
+    </message>
+    <message name="searchBookByTitleRequest">
+        <part name="part1" type="xsd:string"/>
+    </message>
+    <message name="searchBookByTitleResponse">
+        <part name="part1" type="tns:BookCollection"/>
+    </message>
+    <message name="searchBookByAuthorRequest">
+        <part name="author" type="xsd:string"/>
+    </message>
+    <message name="searchBookByAuthorResponse">
+        <part name="books" type="tns:BookCollection"/>
+    </message>
+    <portType name="BookStorePortType">
+        <operation name="removeBook">
+            <input name="input1" message="tns:removeBookRequest"/>
+        </operation>
+        <operation name="addBook">
+            <input name="input2" message="tns:addBookRequest"/>
+        </operation>
+        <operation name="updateBook">
+            <input name="input3" message="tns:updateBookRequest"/>
+        </operation>
+        <operation name="listAllBooks">
+            <input name="input4" message="tns:sizeOfOutput"/>
+            <output name="output1" message="tns:listAllBooksResponse"/>
+        </operation>
+        <operation name="searchBookByTitle">
+            <input name="input5" message="tns:searchBookByTitleRequest"/>
+            <output name="output2" message="tns:searchBookByTitleResponse"/>
+        </operation>
+        <operation name="searchBookByAuthor">
+            <input name="input6" message="tns:searchBookByAuthorRequest"/>
+            <output name="output3" message="tns:searchBookByAuthorResponse"/>
+        </operation>
+    </portType>
+    <binding name="BookStoreBinding" type="tns:BookStorePortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="removeBook">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body use="literal"/>
+            </input>
+        </operation>
+        <operation name="addBook">
+            <soap:operation/>
+            <input name="input2">
+                <soap:body use="literal"/>
+            </input>
+        </operation>
+        <operation name="updateBook">
+            <soap:operation/>
+            <input name="input3">
+                <soap:body use="literal"/>
+            </input>
+        </operation>
+        <operation name="listAllBooks">
+            <soap:operation/>
+            <input name="input4">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output1">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="searchBookByTitle">
+            <soap:operation/>
+            <input name="input5">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output2">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="searchBookByAuthor">
+            <soap:operation/>
+            <input name="input6">
+                <soap:body use="literal"/>
+            </input>
+            <output name="output3">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="BookStoreService">
+        <port name="BookStorePort" binding="tns:BookStoreBinding">
+            <soap:address location="http://localhost:${HttpDefaultPort}/BookStoreService/BookStorePort"/>
+        </port>
+    </service>
+    <plnk:partnerLinkType name="BookStore">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes. 
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="BookStorePortTypeRole" portType="tns:BookStorePortType"/>
+    </plnk:partnerLinkType>
+</definitions>

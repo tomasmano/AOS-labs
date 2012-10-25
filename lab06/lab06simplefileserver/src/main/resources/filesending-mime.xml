@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://testing/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SendFileService" targetNamespace="http://testing/">
+  <wsdl:types>
+    <xs:schema xmlns:tns="http://testing/" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" targetNamespace="http://testing/" version="1.0">
+      <xs:element name="sendFile" type="tns:sendFile"/>
+      <xs:element name="sendFileResponse" type="tns:sendFileResponse"/>
+      <xs:complexType name="sendFile">
+        <xs:sequence>
+          <xs:element xmlns:ns1="http://www.w3.org/2005/05/xmlmime" minOccurs="0" name="arg0" ns1:expectedContentTypes="application/octet-stream" type="xs:base64Binary"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sendFileResponse">
+        <xs:sequence/>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="sendFileResponse">
+    <wsdl:part element="tns:sendFileResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sendFile">
+    <wsdl:part element="tns:sendFile" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="SendFileIface">
+    <wsdl:operation name="sendFile">
+      <wsdl:input message="tns:sendFile" name="sendFile">
+    </wsdl:input>
+      <wsdl:output message="tns:sendFileResponse" name="sendFileResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SendFileServiceSoapBinding" type="tns:SendFileIface">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="sendFile">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="sendFile">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="sendFileResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SendFileService">
+    <wsdl:port binding="tns:SendFileServiceSoapBinding" name="SendFilePort">
+      <soap:address location="http://localhost:8080/cxf_spring/SendFile"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

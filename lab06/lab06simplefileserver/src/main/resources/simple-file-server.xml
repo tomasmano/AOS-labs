@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="simple-file-server" targetNamespace="http://j2ee.netbeans.org/wsdl/lab06simplefileserver/java/simple-file-server"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/lab06simplefileserver/java/simple-file-server" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <types>
+        <xsd:schema targetNamespace="http://j2ee.netbeans.org/wsdl/lab06simplefileserver/java/simple-file-server" xmlns:tns="http://j2ee.netbeans.org/wsdl/lab06simplefileserver/java/simple-file-server">
+            <xsd:complexType name="NoSuchFileException">
+                <xsd:sequence/>
+            </xsd:complexType>
+            <xsd:complexType name="StringArray">
+                <xsd:sequence>
+                    <xsd:element name="filename" type="xsd:string" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="BinaryFile" type="tns:BinaryFile"></xsd:element>
+            <xsd:complexType name="BinaryFile">
+                <xsd:sequence>
+                    <xsd:element xmlns:ns1="http://www.w3.org/2005/05/xmlmime" name="file" ns1:expectedContentTypes="application/octet-stream" type="xsd:base64Binary"></xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </types>
+    <message name="filename">
+        <part name="fileName" type="xsd:string"/>
+    </message>
+    <message name="getFileResponse">
+        <part name="fileFromServer" element="tns:BinaryFile"/>
+    </message>
+    <message name="NoSuchFileException">
+        <part name="NoSuchFile" type="tns:NoSuchFileException"/>
+    </message>
+    <message name="listFilesRequest">
+        <part name="outputSize" type="xsd:integer"/>
+    </message>
+    <message name="listFileResponse">
+        <part name="listOfFilenames" type="tns:StringArray"/>
+    </message>
+    <message name="deleteFileRequest">
+        <part name="part1" type="xsd:string"/>
+    </message>
+    <message name="deleteFileResponse">
+        <part name="legacyResponse" type="xsd:string"/>
+    </message>
+    <message name="putFileRequest">
+        <part name="filename" type="xsd:string"/>
+        <part name="fileFromClient" element="tns:BinaryFile"/>
+    </message>
+    <message name="postFileRequest">
+        <part name="filename" type="xsd:string"/>
+        <part name="file" element="tns:BinaryFile"/>
+    </message>
+    <message name="postFileResponse">
+        <part name="legacyResponse" type="xsd:string"/>
+    </message>
+    <portType name="simple-file-server">
+        <operation name="getFile">
+            <input name="fileName" message="tns:filename"/>
+            <output name="fileFromServer" message="tns:getFileResponse"/>
+            <fault name="operationFault" message="tns:NoSuchFileException"/>
+        </operation>
+        <operation name="listFiles">
+            <input name="outputSize" message="tns:listFilesRequest"/>
+            <output name="listOfFilenames" message="tns:listFileResponse"/>
+        </operation>
+        <operation name="deleteFile">
+            <input name="deleteFileByFilename" message="tns:filename"/>
+            <output name="deleteFileLegacyResponse" message="tns:deleteFileResponse"/>
+            <fault name="operationFault" message="tns:NoSuchFileException"/>
+        </operation>
+        <operation name="putFile">
+            <input name="putFileRequest" message="tns:putFileRequest"/>
+        </operation>
+        <operation name="postFile">
+            <input name="postFileRequest" message="tns:postFileRequest"/>
+            <output name="postFileLegacyResponse" message="tns:postFileResponse"/>
+            <fault name="operationFault" message="tns:NoSuchFileException"/>
+        </operation>
+    </portType>
+    <binding name="simple-file-serverPortTypeBinding" type="tns:simple-file-server">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getFile">
+            <soap:operation/>
+            <input name="fileName">
+                <soap:body use="literal"/>
+            </input>
+            <output name="fileFromServer">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="operationFault">
+                <soap:fault name="operationFault" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="listFiles">
+            <soap:operation/>
+            <input name="outputSize">
+                <soap:body use="literal"/>
+            </input>
+            <output name="listOfFilenames">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="deleteFile">
+            <soap:operation/>
+            <input name="deleteFileByFilename">
+                <soap:body use="literal"/>
+            </input>
+            <output name="deleteFileLegacyResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="operationFault">
+                <soap:fault name="operationFault" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="putFile">
+            <soap:operation/>
+            <input name="putFileRequest">
+                <soap:body use="literal"/>
+            </input>
+        </operation>
+        <operation name="postFile">
+            <soap:operation/>
+            <input name="postFileRequest">
+                <soap:body use="literal"/>
+            </input>
+            <output name="postFileLegacyResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="operationFault">
+                <soap:fault name="operationFault" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+    <service name="fileServerServices">
+        <port name="fileServerServicesPort" binding="tns:simple-file-serverPortTypeBinding"/>
+    </service>
+    <plnk:partnerLinkType name="simple-file-server">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes. 
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="simple-file-serverPortTypeRole" portType="tns:simple-file-serverPortType"/>
+    </plnk:partnerLinkType>
+</definitions>

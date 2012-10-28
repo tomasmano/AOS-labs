@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="simple-file-server" targetNamespace="http://j2ee.netbeans.org/wsdl/lab06simplefileserver/java/simple-file-server" xmlns:ns1="http://j2ee.netbeans.org/wsdl/lab06simplefileserver/java/simple-file-server" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://j2ee.netbeans.org/wsdl/lab06simplefileserver/java/simple-file-server" xmlns:tns="http://j2ee.netbeans.org/wsdl/lab06simplefileserver/java/simple-file-server" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="BinaryFile" type="tns:BinaryFile"/>
+<xs:complexType name="NoSuchFileException">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="BinaryFile">
+<xs:sequence>
+<xs:element name="file" ns1:expectedContentTypes="application/octet-stream" type="xs:base64Binary" xmlns:ns1="http://www.w3.org/2005/05/xmlmime"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="StringArray">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="filename" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="NoSuchFile" nillable="true" type="tns:NoSuchFileException"/>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getFile">
+    <wsdl:part name="fileName" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteFileResponse">
+    <wsdl:part name="legacyResponse" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listFiles">
+    <wsdl:part name="outputSize" type="xsd:integer">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="postFile">
+    <wsdl:part name="filename" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="file" type="ns1:BinaryFile">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getFileResponse">
+    <wsdl:part name="fileFromServer" type="ns1:BinaryFile">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="putFile">
+    <wsdl:part name="filename" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="fileFromClient" type="ns1:BinaryFile">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="postFileResponse">
+    <wsdl:part name="legacyResponse" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NoSuchFileException_Exception">
+    <wsdl:part element="ns1:NoSuchFile" name="NoSuchFileException_Exception">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listFilesResponse">
+    <wsdl:part name="listOfFilenames" type="ns1:StringArray">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteFile">
+    <wsdl:part name="fileName" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="simple-file-server">
+    <wsdl:operation name="deleteFile">
+      <wsdl:input message="ns1:deleteFile" name="deleteFile">
+    </wsdl:input>
+      <wsdl:output message="ns1:deleteFileResponse" name="deleteFileResponse">
+    </wsdl:output>
+      <wsdl:fault message="ns1:NoSuchFileException_Exception" name="NoSuchFileException_Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getFile">
+      <wsdl:input message="ns1:getFile" name="getFile">
+    </wsdl:input>
+      <wsdl:output message="ns1:getFileResponse" name="getFileResponse">
+    </wsdl:output>
+      <wsdl:fault message="ns1:NoSuchFileException_Exception" name="NoSuchFileException_Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="putFile">
+      <wsdl:input message="ns1:putFile" name="putFile">
+    </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="listFiles">
+      <wsdl:input message="ns1:listFiles" name="listFiles">
+    </wsdl:input>
+      <wsdl:output message="ns1:listFilesResponse" name="listFilesResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="postFile">
+      <wsdl:input message="ns1:postFile" name="postFile">
+    </wsdl:input>
+      <wsdl:output message="ns1:postFileResponse" name="postFileResponse">
+    </wsdl:output>
+      <wsdl:fault message="ns1:NoSuchFileException_Exception" name="NoSuchFileException_Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

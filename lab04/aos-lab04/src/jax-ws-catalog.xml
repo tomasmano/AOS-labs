@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://localhost:8082/cxf_spring/SimpleFileServer?wsdl" uri="wsdl/localhost_8082/cxf_spring/SimpleFileServer.wsdl"/>
+    <system systemId="http://localhost:8082/cxf_spring/SimpleFileServer?wsdl=simple-file-server.wsdl" uri="wsdl/localhost_8082/cxf_spring/SimpleFileServer.wsdl_simple-file-server.wsdl"/>
+</catalog>

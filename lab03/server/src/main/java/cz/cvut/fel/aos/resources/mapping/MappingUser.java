@@ -14,6 +14,7 @@ public class MappingUser {
     private String password;
     //not required
     private List<String> emails;
+    private int goals;
     
     public MappingUser(){}
     
@@ -23,6 +24,7 @@ public class MappingUser {
             this.nickname = userEntity.getNick();
             this.password = userEntity.getPass();
             this.emails   = new LinkedList<String>(userEntity.getEmails());
+            this.goals = userEntity.getGoals();
         }
     }
 
@@ -50,5 +52,17 @@ public class MappingUser {
     public void setEmails(List<String> emails) {
         this.emails = emails;
     }
-    
+
+    public int getGoals() {
+        return goals;
+    }
+
+    public void setGoals(int goals) {
+        this.goals = goals;
+    }
+
+    @Override
+    public String toString() {
+        return "MappingUser{" + "nickname=" + nickname + ", password=" + password + ", emails=" + emails + ", goals=" + goals + '}';
+    }
 }

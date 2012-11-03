@@ -19,7 +19,7 @@ import javax.ws.rs.core.MediaType;
 public class Class3Client {
 
     private Client client;
-    private final static String url = "http://localhost:8084/aos-rest-users-server/rest/users";
+    private final static String url = "http://localhost:8081/aos-rest-users-server/rest/users";
 
     public Class3Client() {
         ClientConfig clientConfig = new DefaultClientConfig();

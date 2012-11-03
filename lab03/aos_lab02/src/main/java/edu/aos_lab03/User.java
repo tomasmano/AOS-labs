@@ -18,6 +18,7 @@ public class User {
     private String password;
     //for incomming info
     private String[] emails;
+    private int goals;
 
     public User() {
     }
@@ -25,6 +26,11 @@ public class User {
     public User(String nickname, String password) {
         this.nickname = nickname;
         this.password = password;
+    }
+
+    public User(String nickname, int goals) {
+        this.nickname = nickname;
+        this.goals = goals;
     }
 
     public String getNickname() {
@@ -51,12 +57,17 @@ public class User {
         this.emails = emails;
     }
 
+    public int getGoals() {
+        return goals;
+    }
+
+    public void setGoals(int goals) {
+        this.goals = goals;
+    }
+
     @Override
     public String toString() {
-        return "||  NICK: " + nickname + "\t"
-                + "PASS: " + password + "\t"
-                + "EMAILS: " + Arrays.toString(emails)
-                + "  ||";
-
+        return "User{" + "nickname=" + nickname + ", password=" + password + ", emails=" + Arrays.toString(emails) + ", goals=" + goals + '}';
     }
+    
 }

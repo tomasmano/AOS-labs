@@ -7,18 +7,29 @@ import java.util.LinkedList;
  * Class that simulates DB entity.
  */
 public class UserEntity {
-    
+
     private static long maxId = 0;
-    
     private long id;
     private String nick;
     private String pass;
     private Collection<String> emails = new LinkedList<String>();
+    private int goals;
 
     public UserEntity(String nick, String pass) {
-        this.id     = ++maxId;
-        this.nick   = nick;
-        this.pass   = pass;
+        this.id = ++maxId;
+        this.nick = nick;
+        this.pass = pass;
+    }
+
+    public UserEntity() {
+        this.id = ++maxId;
+    }
+
+    public UserEntity(String nick, String pass, int goals) {
+        this.id = ++maxId;
+        this.nick = nick;
+        this.pass = pass;
+        this.goals = goals;
     }
 
     public long getId() {
@@ -36,24 +47,34 @@ public class UserEntity {
     public Collection<String> getEmails() {
         return emails;
     }
-    
-    public void addEmail(String email){
+
+    public void addEmail(String email) {
         this.emails.add(email);
     }
-    
-    public void changePassword(String pass){
+
+    public void changePassword(String pass) {
         this.pass = pass;
     }
-    public void changeUserNick(String nick){
+
+    public void changeUserNick(String nick) {
         this.nick = nick;
     }
-    
-    public boolean deleteEmail(String email){
+
+    public boolean deleteEmail(String email) {
         return emails.remove(email);
+    }
+
+    public int getGoals() {
+        return goals;
+    }
+
+    public void setGoals(int goals) {
+        this.goals = goals;
     }
 
     @Override
     public String toString() {
-        return "UserEntity{" + "id=" + id + ", nick=" + nick + ", pass=" + pass + ", emails=" + emails + '}';
+        return "UserEntity{" + "id=" + id + ", nick=" + nick + ", pass=" + pass + ", emails=" + emails + ", goals=" + goals + '}';
     }
+    
 }

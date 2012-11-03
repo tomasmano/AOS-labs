@@ -33,9 +33,8 @@ public class UsersResource {
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
     public String add(MappingUser newUser) {
-        UserEntity userEntity = new UserEntity(newUser.getNickname(), newUser.getPassword());
+        UserEntity userEntity = new UserEntity(newUser.getNickname(), newUser.getPassword(), newUser.getGoals());
         boolean ret = AOSMemoryDB.addUser(userEntity);
-
         //sends the return value (primitive type) as plain text over network
         return String.valueOf(ret);
     }

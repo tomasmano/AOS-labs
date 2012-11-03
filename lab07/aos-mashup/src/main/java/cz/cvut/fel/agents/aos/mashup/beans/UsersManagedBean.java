@@ -46,7 +46,6 @@ public class UsersManagedBean {
         List<MashupUser> sorted = new ArrayList<MashupUser>(users);
         Collections.sort(sorted);
         users = sorted;
-        System.out.println("sorted collection: " + users);
     }
 
     /**
@@ -73,7 +72,6 @@ public class UsersManagedBean {
                 users.add(new MashupUser(tTopGoalScorer));
             }
         }
-        System.out.println(">>>> size: " + users.size());
     }
 
     public void setUsers(Collection<MashupUser> users) {

@@ -1,5 +1,6 @@
 package cz.cvut.aos.bookingserver.model;
 
+import cz.cvut.aos.bookingserver.model.common.Persistable;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +18,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Tomas Mano <tomasmano@gmail.com>
  */
 @Entity
-public class Flight implements Serializable {
+public class Flight implements Persistable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -32,6 +33,7 @@ public class Flight implements Serializable {
     private List<AirTicket> airTickets;
     private int capacity;
 
+    @Override
     public Long getId() {
         return id;
     }

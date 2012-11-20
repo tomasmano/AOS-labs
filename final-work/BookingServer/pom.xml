@@ -112,6 +112,14 @@
             <version>${net.sf.ehcache.version}</version>
         </dependency>
         
+        <!-- utils -->
+        
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+        </dependency>
+        
         <!-- Apache CXF -->
         
         <dependency>
@@ -130,7 +138,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
             <version>${org.slf4j.version}</version>
-            
         </dependency>
 
         <dependency>

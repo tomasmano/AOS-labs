@@ -50,7 +50,9 @@ public class UsersResource {
         }
         String newPassword = user.getPassword();
         userEntity.changePassword(newPassword);
-        return "Your password was updated succesfully";
+        int newGoals = user.getGoals();
+        userEntity.setGoals(newGoals);
+        return "Your data was updated succesfully";
     }
 
     // GET / vylistuje všechny uživatele 

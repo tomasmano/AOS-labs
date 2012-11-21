@@ -8,10 +8,12 @@ import edu.aos_lab03.User;
 import edu.tomy.bestgoalscorers.BestGoalScorersProvider;
 import generatedcode.client.TTopGoalScorer;
 import generatedcode.client.TTopSelectedGoalScorer;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import javax.faces.context.FacesContext;
 
 @ManagedBean(name = "usersBean")
 public class UsersManagedBean {
@@ -57,7 +59,7 @@ public class UsersManagedBean {
             MashupUser checked = new MashupUser(user);
             if (!users.contains(checked)) {
                 users.add(new MashupUser(user));
-            }
+            } 
         }
     }
 
@@ -98,9 +100,14 @@ public class UsersManagedBean {
     /**
      * Action method called by action button.
      */
-    public void add() {
+    public void add() throws IOException {
         User user = new User(username, goals);
-        class3Client.addUser(user);
 //        users.add(new MashupUser(user));
+        if (users.contains(new MashupUser(user))) {
+            class3Client.updateUser(username, user);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/aos-mashup/home.jsf");
+        } else {
+            class3Client.addUser(user);
+        }
     }
 }

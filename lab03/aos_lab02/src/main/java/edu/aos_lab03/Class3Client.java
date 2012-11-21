@@ -58,6 +58,14 @@ public class Class3Client {
 
         return response;
     }
+    
+    public String updateUser(String nickname, User user){
+        WebResource resource = client.resource(url).path(nickname);
+        User update = new User();
+        update.setGoals(user.getGoals());
+        String response = resource.accept(MediaType.TEXT_PLAIN_TYPE).type(MediaType.APPLICATION_JSON_TYPE).put(String.class, update);
+        return response;
+    }
 
     public String updateUserPassword(String nickname, String password) {
         WebResource resource = client.resource(url).path(nickname);

@@ -1,0 +1,3 @@
+Dear Tomas Mano 
+ Here is your ticket: From: praha, to: paris departure: Wed Nov 21 01:07:34 CET 2012 price: 1999.0. 
+ Thank you for the purchase.

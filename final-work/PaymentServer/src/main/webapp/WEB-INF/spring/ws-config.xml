@@ -9,7 +9,7 @@
     <import resource="classpath:META-INF/cxf/cxf.xml" />
     
     
-    <jaxws:endpoint id="bookingService" implementor="cz.cvut.aos.bookingserver.webservice.BookingServiceImpl" address="/BookingService" />
+    <jaxws:endpoint id="paymentWebService" implementor="cz.cvut.aos.paymentserver.webservice.PaymentServiceImpl" address="/PaymentService" />
         
 
 </beans>

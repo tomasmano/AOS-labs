@@ -9,15 +9,15 @@ import org.apache.cxf.tools.wsdlto.WSDLToJava;
 public class App {
 
     public static void main(String[] args) {
-        WSDLToJava.main(new String[]{
-                    "-client",
-                    "-d",
-                    "src/main/java",
-                    "-p",
-                    "generatedcode.client",
-                    "http://footballpool.dataaccess.eu/data/info.wso?WSDL"
-                });
-
-        System.out.println("Done!");
+//        WSDLToJava.main(new String[]{
+//                    "-client",
+//                    "-d",
+//                    "src/main/java",
+//                    "-p",
+//                    "generatedcode.client",
+//                    "http://footballpool.dataaccess.eu/data/info.wso?WSDL"
+//                });
+//
+//        System.out.println("Done!");
     }
 }

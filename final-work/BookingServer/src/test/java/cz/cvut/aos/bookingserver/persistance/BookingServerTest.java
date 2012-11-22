@@ -4,6 +4,7 @@ import cz.cvut.aos.bookingserver.dao.contract.GenericDAO;
 import cz.cvut.aos.bookingserver.model.AirTicket;
 import cz.cvut.aos.bookingserver.model.Flight;
 import cz.cvut.aos.bookingserver.service.BookingService;
+import cz.cvut.aos.bookingserver.service.exception.FlightCapacityExceededException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -58,7 +59,7 @@ public class BookingServerTest extends AbstractServiceTest{
     }
     
     @Test
-    public void test_book_flight() {
+    public void test_book_flight() throws FlightCapacityExceededException {
         //given
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, 5);

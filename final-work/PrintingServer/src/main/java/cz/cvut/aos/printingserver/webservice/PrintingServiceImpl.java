@@ -4,6 +4,7 @@ import cz.cvut.aos.printingserver.model.AirTicketCopy;
 import cz.cvut.aos.printingserver.model.Flight;
 import cz.cvut.aos.printingserver.model.User;
 import cz.cvut.aos.printingserver.service.PrintingService;
+import cz.cvut.aos.printingserver.service.exception.PrintingException;
 import javax.jws.WebService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,7 +23,7 @@ public class PrintingServiceImpl implements cz.cvut.aos.printingserver.webservic
     PrintingService printingService;
 
     @Override
-    public AirTicketCopy printAirTicket(Flight flight, User user) {
+    public AirTicketCopy printAirTicket(Flight flight, User user) throws PrintingException{
         return printingService.printAirTicket(flight, user);
     }
 }

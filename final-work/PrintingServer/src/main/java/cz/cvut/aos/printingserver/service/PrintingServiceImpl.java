@@ -3,6 +3,7 @@ package cz.cvut.aos.printingserver.service;
 import cz.cvut.aos.printingserver.model.AirTicketCopy;
 import cz.cvut.aos.printingserver.model.Flight;
 import cz.cvut.aos.printingserver.model.User;
+import cz.cvut.aos.printingserver.service.exception.PrintingException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class PrintingServiceImpl implements PrintingService {
 
     @Override
-    public AirTicketCopy printAirTicket(Flight flight, User user) {
+    public AirTicketCopy printAirTicket(Flight flight, User user) throws PrintingException{
         File file = writeAirTicket(flight, user);
         return new AirTicketCopy(new DataHandler(new FileDataSource(file)));
     }

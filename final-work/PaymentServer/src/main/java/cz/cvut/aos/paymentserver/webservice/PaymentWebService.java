@@ -1,9 +1,7 @@
 package cz.cvut.aos.paymentserver.webservice;
 
-import cz.cvut.aos.paymentserver.model.AirTicket;
-import cz.cvut.aos.paymentserver.model.Flight;
-import java.util.Date;
-import java.util.List;
+import cz.cvut.aos.paymentserver.model.Payment;
+import cz.cvut.aos.paymentserver.service.exception.UnknownAccountException;
 import javax.jws.WebService;
 
 /**
@@ -13,11 +11,9 @@ import javax.jws.WebService;
 @WebService
 public interface PaymentWebService {
 
-    public List<Flight> findFlight(String source, String target);
+    public Payment payWithCreditCard(Long payer, Long payee, double amount) throws UnknownAccountException;
 
-    public List<Flight> findFlightWithTime(String source, String target, Date flightTime);
-
-    public AirTicket bookFlight(Long code);
-
-    public int getFlightCapacity(Long code);
+    public Payment payWithBankAccount(Long payer, Long payee, double amount) throws UnknownAccountException;
+    
+    public double getBalance(Long account) throws UnknownAccountException;
 }

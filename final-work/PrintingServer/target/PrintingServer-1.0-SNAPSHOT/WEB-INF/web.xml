@@ -11,7 +11,7 @@
     This value must be unique per Servlet Container. -->
     <context-param>
         <param-name>webAppRootKey</param-name>
-        <param-value>webapp.root.booking-service</param-value>
+        <param-value>webapp.root.printing-service</param-value>
     </context-param>
 
     <!-- Path to log4j configuration file. -->

@@ -2,6 +2,7 @@ package cz.cvut.aos.bookingserver.webservice;
 
 import cz.cvut.aos.bookingserver.model.AirTicket;
 import cz.cvut.aos.bookingserver.model.Flight;
+import cz.cvut.aos.bookingserver.service.exception.FlightCapacityExceededException;
 import java.util.Date;
 import java.util.List;
 import javax.jws.WebService;
@@ -17,7 +18,7 @@ public interface BookingService {
 
     public List<Flight> findFlightWithTime(String source, String target, Date flightTime);
 
-    public AirTicket bookFlight(Long code);
+    public AirTicket bookFlight(Long code) throws FlightCapacityExceededException;
 
     public int getFlightCapacity(Long code);
 }

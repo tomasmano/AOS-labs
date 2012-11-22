@@ -3,6 +3,7 @@ package cz.cvut.aos.bookingserver.webservice;
 import cz.cvut.aos.bookingserver.model.AirTicket;
 import cz.cvut.aos.bookingserver.model.Flight;
 import cz.cvut.aos.bookingserver.service.BookingService;
+import cz.cvut.aos.bookingserver.service.exception.FlightCapacityExceededException;
 import java.util.Date;
 import java.util.List;
 import javax.jws.WebService;
@@ -29,7 +30,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public AirTicket bookFlight(Long code) {
+    public AirTicket bookFlight(Long code) throws FlightCapacityExceededException{
         return bookingService.bookFlight(code);
     }
 

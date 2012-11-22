@@ -1,59 +1,63 @@
 package cz.cvut.aos.paymentserver.service;
 
-import cz.cvut.aos.paymentserver.dao.contract.GenericDAO;
-import cz.cvut.aos.paymentserver.model.AirTicket;
-import cz.cvut.aos.paymentserver.model.Flight;
+import cz.cvut.aos.paymentserver.model.Account;
+import cz.cvut.aos.paymentserver.model.Payment;
+import cz.cvut.aos.paymentserver.service.exception.UnknownAccountException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import java.util.Collection;
 import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Tomas Mano <tomasmano@gmail.com>
  */
-@Service
+@Service("paymentServiceBean")
 public class PaymentServiceImpl implements PaymentService {
 
-    @Autowired
-    @Qualifier("genericHibernateJpa2DAO")
-    GenericDAO genericDao;
+    private static final Collection<Account> accountDB = new ArrayList<Account>();
 
-    @Override
-    public List<Flight> findFlight(String source, String target) {
-        return genericDao.findByProperties(new String[]{"source","target"}, new String[]{source,target}, Flight.class);
+    static {
+        accountDB.add(new Account(123L, 9999L, "tomy", "pass1", 10000));
+        accountDB.add(new Account(456L, 8888L, "dasa", "pass2", 15000));
+        accountDB.add(new Account(789L, 7777L, "miso", "pass3", 25000));
     }
 
     @Override
-    public List<Flight> findFlightWithTime(String source, String target, Date flightTime) {
-        List<Flight> retrieved = findFlight(source, target);
-        List<Flight> flights = new ArrayList<Flight>();
-        for (Flight flight : retrieved) {
-            if (flight.getFlightTime().equals(flightTime)) {
-                flights.add(flight);
+    public Payment payWithCreditCard(Long payer, Long payee, double amount) throws UnknownAccountException {
+        return transferMoney(findByCreditNumber(payer), findByCreditNumber(payee), amount);
+    }
+
+    @Override
+    public Payment payWithBankAccount(Long payer, Long payee, double amount) throws UnknownAccountException {
+        return transferMoney(findByAccountNumber(payer), findByAccountNumber(payee), amount);
+    }
+
+    @Override
+    public double getBalance(Long account) throws UnknownAccountException {
+        return findByAccountNumber(account).getBalance();
+    }
+
+    private Payment transferMoney(Account payer, Account payee, double amount) {
+        payer.chargeMoney(amount);
+        payee.insertMoney(amount);
+        return new Payment(amount, payer, payee);
+    }
+    
+    private Account findByAccountNumber(Long identifier) throws UnknownAccountException {
+        for (Account account : accountDB) {
+            if (account.getAccountNumber().equals(identifier)) {
+                return account;
             }
         }
-        return flights;
+        throw new UnknownAccountException("Account with number [" + identifier + "] doesn't exists.");
     }
 
-    @Override
-    public AirTicket bookFlight(Long code) {
-        Flight flight = genericDao.findById(code, Flight.class);
-        Random r = new Random();
-        int seatNumber = r.nextInt(flight.getCapacity());
-        AirTicket airTicket = new AirTicket(seatNumber);
-        airTicket.setFlight(flight);
-        genericDao.save(airTicket);
-        return airTicket;
-    }
-
-    @Override
-    public int getFlightCapacity(Long code) {
-        Flight flight = genericDao.findById(code, Flight.class);
-        return flight.getCapacity();
+    private Account findByCreditNumber(Long identifier) throws UnknownAccountException {
+        for (Account account : accountDB) {
+            if (account.getCreditCardNumber().equals(identifier)) {
+                return account;
+            }
+        }
+        throw new UnknownAccountException("Account with number [" + identifier + "] doesn't exists.");
     }
 }

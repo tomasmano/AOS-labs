@@ -3,11 +3,11 @@ package cz.cvut.aos.bookingserver.service;
 import cz.cvut.aos.bookingserver.dao.contract.GenericDAO;
 import cz.cvut.aos.bookingserver.model.AirTicket;
 import cz.cvut.aos.bookingserver.model.Flight;
+import cz.cvut.aos.bookingserver.service.exception.FlightCapacityExceededException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -41,8 +41,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public AirTicket bookFlight(Long code) {
+    public AirTicket bookFlight(Long code) throws FlightCapacityExceededException{
         Flight flight = genericDao.findById(code, Flight.class);
+        if (flight.getCapacity()<=0) {
+            throw new FlightCapacityExceededException("Not enough capacity avaible in given flight.");
+        }
         Random r = new Random();
         int seatNumber = r.nextInt(flight.getCapacity());
         AirTicket airTicket = new AirTicket(seatNumber);

@@ -4,28 +4,33 @@ import cz.cvut.aos.bookingserver.model.AirTicket;
 import cz.cvut.aos.bookingserver.model.Flight;
 import cz.cvut.aos.bookingserver.service.BookingService;
 import cz.cvut.aos.bookingserver.service.exception.FlightCapacityExceededException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.jws.WebService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Tomas Mano <tomasmano@gmail.com>
  */
 @WebService(endpointInterface = "cz.cvut.aos.bookingserver.webservice.BookingService")
-public class BookingServiceImpl implements BookingService {
+@Service("bookingWebServiceImpl")
+public class BookingServiceImpl implements cz.cvut.aos.bookingserver.webservice.BookingService {
 
     @Autowired
     BookingService bookingService;
 
     @Override
     public List<Flight> findFlight(String source, String target) {
-        return bookingService.findFlight(source, target);
+        List<Flight> flights = bookingService.findFlight(source, target);
+        return flights;
     }
 
     @Override
-    public List<Flight> findFlightWithTime(String source, String target, Date flightTime) {
+    public List<Flight> findFlightWithTime(String source, String target, String flightTime) {
         return bookingService.findFlightWithTime(source, target, flightTime);
     }
 
@@ -38,4 +43,5 @@ public class BookingServiceImpl implements BookingService {
     public int getFlightCapacity(Long code) {
         return bookingService.getFlightCapacity(code);
     }
+
 }

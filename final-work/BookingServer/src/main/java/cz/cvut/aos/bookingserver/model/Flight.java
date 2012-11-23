@@ -1,42 +1,50 @@
 package cz.cvut.aos.bookingserver.model;
 
+import cz.cvut.aos.bookingserver.model.adapter.TimestampAdapter;
 import cz.cvut.aos.bookingserver.model.common.Persistable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  *
  * @author Tomas Mano <tomasmano@gmail.com>
  */
 @Entity
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Flight implements Persistable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @Temporal(TemporalType.TIME)
-    private Date flightTime;
+//    @Temporal(TemporalType.TIMESTAMP)
+    @XmlJavaTypeAdapter(TimestampAdapter.class)
+    private Timestamp flightTime;
     private double price;
     private String source;
     private String target;
+    @OneToMany(mappedBy = "flight", fetch = FetchType.EAGER)
     @XmlTransient
-    @OneToMany(mappedBy = "flight")
     private List<AirTicket> airTickets;
     private int capacity;
 
     public Flight() {
     }
 
-    public Flight(Date flightTime, double price, String source, String target, int capacity) {
+    public Flight(Timestamp flightTime, double price, String source, String target, int capacity) {
         this.flightTime = flightTime;
         this.price = price;
         this.source = source;
@@ -46,7 +54,7 @@ public class Flight implements Persistable {
 
     /**
      * Registers given airticket to this flight.
-     * 
+     *
      * @param airTicket airticket to be registered
      */
     protected void registerAirTicker(AirTicket airTicket) {
@@ -68,11 +76,11 @@ public class Flight implements Persistable {
         this.id = id;
     }
 
-    public Date getFlightTime() {
+    public Timestamp getFlightTime() {
         return flightTime;
     }
 
-    public void setFlightTime(Date flightTime) {
+    public void setFlightTime(Timestamp flightTime) {
         this.flightTime = flightTime;
     }
 
@@ -120,5 +128,4 @@ public class Flight implements Persistable {
     public String toString() {
         return "Flight{" + "id=" + id + ", flightTime=" + flightTime + ", price=" + price + ", source=" + source + ", target=" + target + ", capacity=" + capacity + '}';
     }
-    
 }

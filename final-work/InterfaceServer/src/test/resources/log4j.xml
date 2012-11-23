@@ -31,10 +31,6 @@
     <logger name="org.springframework.context">
         <level value="INFO" />
     </logger>
-    
-    <logger name="org.springframework.transaction">
-        <level value="TRACE" />
-    </logger>
 
     <logger name="org.springframework.web">
         <level value="INFO" />

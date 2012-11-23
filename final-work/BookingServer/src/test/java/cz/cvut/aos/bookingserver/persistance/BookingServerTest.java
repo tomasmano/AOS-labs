@@ -5,6 +5,7 @@ import cz.cvut.aos.bookingserver.model.AirTicket;
 import cz.cvut.aos.bookingserver.model.Flight;
 import cz.cvut.aos.bookingserver.service.BookingService;
 import cz.cvut.aos.bookingserver.service.exception.FlightCapacityExceededException;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -29,9 +30,7 @@ public class BookingServerTest extends AbstractServiceTest{
     @Test
     public void test_find_flight(){
         //given
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, 5);
-        Date date = calendar.getTime();
+        Timestamp date = Timestamp.valueOf("2012-12-20 16:00:00");
         
         Flight flight1 = new Flight(date, 200, "praha", "london", 300);
         Flight flight2 = new Flight(date, 150, "praha", "berlin", 350);
@@ -48,7 +47,7 @@ public class BookingServerTest extends AbstractServiceTest{
         //when
         List<Flight> retrived = bookingService.findFlight("praha", "paris");
         List<Flight> empty = bookingService.findFlight("praha", "jupiter");
-        List<Flight> withtime = bookingService.findFlightWithTime("london", "rio", date);
+        List<Flight> withtime = bookingService.findFlightWithTime("london", "rio", "2012-12-20 16:00:00");
         
         //then
         assertFalse(retrived.isEmpty());
@@ -61,10 +60,8 @@ public class BookingServerTest extends AbstractServiceTest{
     @Test
     public void test_book_flight() throws FlightCapacityExceededException {
         //given
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, 5);
-        Date date = calendar.getTime();
-
+        Timestamp date = Timestamp.valueOf("2012-12-20 16:00:00");
+        
         Flight flight1 = new Flight(date, 200, "praha", "london", 300);
 
         genericDao.save(flight1);

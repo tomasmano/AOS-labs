@@ -6,13 +6,13 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
 ">
-<!--    <import resource="classpath:META-INF/cxf/cxf.xml" />
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
     
     
-    <jaxws:endpoint id="interfaceService" implementor="#interfacetWebServiceBean" address="/InterfaceService" />-->
+    <jaxws:endpoint id="interfaceService" implementor="#interfacetWebServiceBean" address="/InterfaceService" />
         
     <jaxws:client id="bookingServiceClient" serviceClass="cz.cvut.aos.interfaceserver.service.BookingService" address="http://localhost:8081/BookingServer/BookingService"/> 
-    <!--<jaxws:client id="paymentServiceClient" serviceClass="cz.cvut.aos.interfaceserver.service.PaymentService" address="http://localhost:8081/PaymentServer"/>--> 
-    <!--<jaxws:client id="printingServiceClient" serviceClass="cz.cvut.aos.interfaceserver.service.PrintingService" address="http://localhost:8081/PrintingServer"/>--> 
+    <jaxws:client id="paymentServiceClient" serviceClass="cz.cvut.aos.interfaceserver.service.PaymentService" address="http://localhost:8081/PaymentServer/PaymentService"/> 
+    <jaxws:client id="printingServiceClient" serviceClass="cz.cvut.aos.interfaceserver.service.PrintingService" address="http://localhost:8081/PrintingServer/PrintingService"/> 
 
 </beans>

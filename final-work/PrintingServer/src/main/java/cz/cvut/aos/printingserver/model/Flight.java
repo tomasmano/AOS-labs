@@ -1,9 +1,12 @@
 package cz.cvut.aos.printingserver.model;
 
+import cz.cvut.aos.printingserver.model.adapter.TimestampAdapter;
+import java.sql.Timestamp;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  *
@@ -13,26 +16,39 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Flight {
 
-    private Date flightTime;
+    private Long id;
+    @XmlJavaTypeAdapter(TimestampAdapter.class)
+    private Timestamp flightTime;
     private double price;
     private String source;
     private String target;
+    private int capacity;
 
     public Flight() {
     }
 
-    public Flight(Date flightTime, double price, String source, String target) {
+    public Flight(Long id, Timestamp flightTime, double price, String source, String target, int capacity) {
+        this.id = id;
         this.flightTime = flightTime;
         this.price = price;
         this.source = source;
         this.target = target;
+        this.capacity = capacity;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Date getFlightTime() {
         return flightTime;
     }
 
-    public void setFlightTime(Date flightTime) {
+    public void setFlightTime(Timestamp flightTime) {
         this.flightTime = flightTime;
     }
 
@@ -60,10 +76,16 @@ public class Flight {
         this.target = target;
     }
 
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
     @Override
     public String toString() {
-        return "Flight{" + "flightTime=" + flightTime + ", price=" + price + ", source=" + source + ", target=" + target + '}';
+        return "Flight{" + "id=" + id + ", flightTime=" + flightTime + ", price=" + price + ", source=" + source + ", target=" + target + ", capacity=" + capacity + '}';
     }
-    
-    
 }

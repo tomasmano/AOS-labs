@@ -1,5 +1,6 @@
 package cz.cvut.aos.paymentserver.webservice;
 
+import cz.cvut.aos.paymentserver.model.Account;
 import cz.cvut.aos.paymentserver.model.Payment;
 import cz.cvut.aos.paymentserver.service.PaymentService;
 import cz.cvut.aos.paymentserver.service.exception.UnknownAccountException;
@@ -33,6 +34,11 @@ public class PaymentWebServiceImpl implements PaymentWebService {
     @Override
     public double getBalance(Long account) throws UnknownAccountException {
         return paymentService.getBalance(account);
+    }
+
+    @Override
+    public Account getAccountDetails(Long account) throws UnknownAccountException {
+        return paymentService.getAccountDetails(account);
     }
 
     public PaymentService getPaymentService() {

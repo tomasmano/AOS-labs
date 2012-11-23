@@ -37,6 +37,11 @@ public class PaymentServiceImpl implements PaymentService {
         return findByAccountNumber(account).getBalance();
     }
 
+    @Override
+    public Account getAccountDetails(Long account) throws UnknownAccountException {
+        return findByAccountNumber(account);
+    }
+
     private Payment transferMoney(Account payer, Account payee, double amount) {
         payer.chargeMoney(amount);
         payee.insertMoney(amount);

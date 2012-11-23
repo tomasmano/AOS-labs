@@ -1,7 +1,7 @@
 package cz.cvut.aos.printingserver.webservice;
 
+import cz.cvut.aos.printingserver.model.AirTicket;
 import cz.cvut.aos.printingserver.model.AirTicketCopy;
-import cz.cvut.aos.printingserver.model.Flight;
 import cz.cvut.aos.printingserver.model.User;
 import cz.cvut.aos.printingserver.service.PrintingService;
 import cz.cvut.aos.printingserver.service.exception.PrintingException;
@@ -23,7 +23,7 @@ public class PrintingServiceImpl implements cz.cvut.aos.printingserver.webservic
     PrintingService printingService;
 
     @Override
-    public AirTicketCopy printAirTicket(Flight flight, User user) throws PrintingException{
-        return printingService.printAirTicket(flight, user);
+    public AirTicketCopy printAirTicket(AirTicket ticket, User user) throws PrintingException{
+        return printingService.printAirTicket(ticket, user);
     }
 }

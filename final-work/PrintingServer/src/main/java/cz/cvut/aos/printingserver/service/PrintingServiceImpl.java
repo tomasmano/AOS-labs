@@ -1,5 +1,6 @@
 package cz.cvut.aos.printingserver.service;
 
+import cz.cvut.aos.printingserver.model.AirTicket;
 import cz.cvut.aos.printingserver.model.AirTicketCopy;
 import cz.cvut.aos.printingserver.model.Flight;
 import cz.cvut.aos.printingserver.model.User;
@@ -20,14 +21,20 @@ import org.springframework.stereotype.Service;
 public class PrintingServiceImpl implements PrintingService {
 
     @Override
-    public AirTicketCopy printAirTicket(Flight flight, User user) throws PrintingException{
-        File file = writeAirTicket(flight, user);
+    public AirTicketCopy printAirTicket(AirTicket ticket, User user) throws PrintingException{
+        File file = writeAirTicket(ticket, user);
         return new AirTicketCopy(new DataHandler(new FileDataSource(file)));
     }
 
-    private File writeAirTicket(Flight flight, User user) {
+    private File writeAirTicket(AirTicket ticket, User user) {
+        Flight flight = ticket.getFlight();
         String data = "Dear "+user.getFirstName()+" "+user.getLastName()+" \n Here is your ticket: "
-                + "From: "+flight.getSource()+", to: "+flight.getTarget()+" departure: "+flight.getFlightTime()+" price: "+flight.getPrice()+". \n Thank you for the purchase.";
+                + "From: "+flight.getSource()+
+                ", to: "+flight.getTarget()+
+                " , departure: "+flight.getFlightTime()+
+                " , seat number: "+ticket.getSeatNumber()+
+                " price: "+flight.getPrice()+
+                ". \n Thank you for the purchase.";
         File file = null;
         PrintWriter out = null;
         try {

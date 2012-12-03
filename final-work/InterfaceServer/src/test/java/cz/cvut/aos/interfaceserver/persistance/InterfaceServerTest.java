@@ -3,6 +3,7 @@ package cz.cvut.aos.interfaceserver.persistance;
 import cz.cvut.aos.interfaceserver.model.AirTicket;
 import cz.cvut.aos.interfaceserver.model.AirTicketCopy;
 import cz.cvut.aos.interfaceserver.model.Flight;
+import cz.cvut.aos.interfaceserver.model.PaymentInfo;
 import cz.cvut.aos.interfaceserver.service.BookingService;
 import cz.cvut.aos.interfaceserver.service.PaymentService;
 import cz.cvut.aos.interfaceserver.service.PrintingService;
@@ -11,6 +12,7 @@ import cz.cvut.aos.interfaceserver.service.exception.PrintingException;
 import cz.cvut.aos.interfaceserver.service.exception.SeatNotAvailable;
 import cz.cvut.aos.interfaceserver.service.exception.UnknownAccountException;
 import cz.cvut.aos.interfaceserver.service.exception.UnknownAirTicketException;
+import cz.cvut.aos.interfaceserver.service.exception.UnsupportedPaymentTypeException;
 import cz.cvut.aos.interfaceserver.webservice.InterfacetWebService;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -57,16 +59,18 @@ public class InterfaceServerTest extends AbstractServiceTest {
     }
 
     @Test
-    public void test_booking_flight() throws UnknownAccountException, FlightCapacityExceededException, PrintingException, UnknownAirTicketException {
-        AirTicket airTicket = interfacetWebService.bookFlight(1L, 123L, 456L);
+    public void test_booking_flight() throws UnknownAccountException, FlightCapacityExceededException, PrintingException, UnknownAirTicketException, UnsupportedPaymentTypeException {
+        PaymentInfo paymentInfo = new PaymentInfo(123L, 456L, "bank");
+        AirTicket airTicket = interfacetWebService.bookFlight(1L, paymentInfo);
         AirTicket retrieved = bookingService.findAirTicket(airTicket.getId());
         assertEquals(retrieved.getFlight().getId(), airTicket.getFlight().getId());
     }
 
     @Test(expected=UnknownAirTicketException.class)
-    public void test_cancel_flight() throws UnknownAccountException, FlightCapacityExceededException, PrintingException, UnknownAirTicketException {
+    public void test_cancel_flight() throws UnknownAccountException, FlightCapacityExceededException, PrintingException, UnknownAirTicketException, UnsupportedPaymentTypeException {
         //given
-        AirTicket airTicket = interfacetWebService.bookFlight(1L, 123L, 456L);
+        PaymentInfo paymentInfo = new PaymentInfo(123L, 456L, "bank");
+        AirTicket airTicket = interfacetWebService.bookFlight(1L, paymentInfo);
         interfacetWebService.cancelFlight(airTicket.getId());
         //when
         AirTicket retrieved = bookingService.findAirTicket(airTicket.getId());
@@ -74,8 +78,9 @@ public class InterfaceServerTest extends AbstractServiceTest {
 
 //    @Ignore // method is useful when you want to check the printed file in your filesystem, we are not asserting anything
     @Test
-    public void test_printing_flight() throws UnknownAccountException, FlightCapacityExceededException, PrintingException, UnknownAirTicketException, SeatNotAvailable {
-        AirTicket airTicket = interfacetWebService.bookFlight(1L, 123L, 456L);
+    public void test_printing_flight() throws UnknownAccountException, FlightCapacityExceededException, PrintingException, UnknownAirTicketException, SeatNotAvailable, UnsupportedPaymentTypeException {
+        PaymentInfo paymentInfo = new PaymentInfo(123L, 456L, "bank");
+        AirTicket airTicket = interfacetWebService.bookFlight(1L, paymentInfo);
 //        AirTicket airTicket = interfacetWebService.changeSeat(144L, 39);
         AirTicketCopy airTicketCopy = interfacetWebService.printAirTicket(airTicket.getId(), 123L);
         DataHandler file = airTicketCopy.getAirTicketData();

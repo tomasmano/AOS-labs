@@ -1,11 +1,13 @@
 package cz.cvut.aos.interfaceserver.webservice;
 
+import cz.cvut.aos.interfaceserver.service.exception.UnsupportedPaymentTypeException;
 import cz.cvut.aos.interfaceserver.service.exception.UnknownAirTicketException;
 import cz.cvut.aos.interfaceserver.model.AirTicket;
 import cz.cvut.aos.interfaceserver.service.exception.UnknownFlightException;
 import cz.cvut.aos.interfaceserver.service.exception.SeatNotAvailable;
 import cz.cvut.aos.interfaceserver.model.AirTicketCopy;
 import cz.cvut.aos.interfaceserver.model.Flight;
+import cz.cvut.aos.interfaceserver.model.PaymentInfo;
 import cz.cvut.aos.interfaceserver.service.exception.FlightCapacityExceededException;
 import cz.cvut.aos.interfaceserver.service.exception.PrintingException;
 import cz.cvut.aos.interfaceserver.service.exception.UnknownAccountException;
@@ -34,15 +36,14 @@ public interface InterfacetWebService {
      * payee.
      *
      * @param code flight's code
-     * @param payer payer account's number
-     * @param payee payee account's number
+     * @param paymentInfo contains payment info (payer, payee, amount, type)
      * @return air ticket
      * @throws UnknownAccountException when unknown account is part of
      * transaction
      * @throws FlightCapacityExceededException when capacity is over limit
      * @throws PrintingException when cannot print ticket
      */
-    public AirTicket bookFlight(Long code, Long payer, Long payee) throws UnknownAccountException, FlightCapacityExceededException;
+    public AirTicket bookFlight(Long code, PaymentInfo paymentInfo) throws UnknownAccountException, FlightCapacityExceededException, UnsupportedPaymentTypeException;
     
     /**
      * Print air ticket electronic document for given airticket's identifier.

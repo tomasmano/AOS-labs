@@ -4,6 +4,8 @@ import cz.cvut.aos.interfaceserver.model.Account;
 import cz.cvut.aos.interfaceserver.model.AirTicket;
 import cz.cvut.aos.interfaceserver.model.AirTicketCopy;
 import cz.cvut.aos.interfaceserver.model.Flight;
+import cz.cvut.aos.interfaceserver.model.Payment;
+import cz.cvut.aos.interfaceserver.model.PaymentInfo;
 import cz.cvut.aos.interfaceserver.model.User;
 import cz.cvut.aos.interfaceserver.service.BookingService;
 import cz.cvut.aos.interfaceserver.service.PaymentService;
@@ -13,6 +15,7 @@ import cz.cvut.aos.interfaceserver.service.exception.PrintingException;
 import cz.cvut.aos.interfaceserver.service.exception.SeatNotAvailable;
 import cz.cvut.aos.interfaceserver.service.exception.UnknownAccountException;
 import cz.cvut.aos.interfaceserver.service.exception.UnknownAirTicketException;
+import cz.cvut.aos.interfaceserver.service.exception.UnsupportedPaymentTypeException;
 import java.util.List;
 import javax.jws.WebService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +37,7 @@ public class InterfaceWebServiceImpl implements InterfacetWebService {
     @Autowired
     @Qualifier("printingServiceClient")
     PrintingService printingService;
-    
+
     @Autowired
     @Qualifier("paymentServiceClient")
     PaymentService paymentService;
@@ -45,9 +48,17 @@ public class InterfaceWebServiceImpl implements InterfacetWebService {
     }
 
     @Override
-    public AirTicket bookFlight(Long code, Long payer, Long payee) throws UnknownAccountException, FlightCapacityExceededException {
+    public AirTicket bookFlight(Long code, PaymentInfo paymentInfo) throws UnknownAccountException, FlightCapacityExceededException, UnsupportedPaymentTypeException {
         AirTicket airTicket = bookingService.bookFlight(code);
-        paymentService.payWithBankAccount(payer, payee, airTicket.getFlight().getPrice());
+        String type = paymentInfo.getType();
+        if (type.equals("bank")) {
+            paymentService.payWithBankAccount(paymentInfo.getPayer(), paymentInfo.getPayer(), airTicket.getFlight().getPrice());
+        }
+        if (type.equals("credit")) {
+            paymentService.payWithCreditCard(paymentInfo.getPayer(), paymentInfo.getPayer(), airTicket.getFlight().getPrice());
+        } else {
+            throw new UnsupportedPaymentTypeException("Payment type ["+type+"] is not supported");
+        }
 //        return printingService.printAirTicket(airTicket, new User(payerAccount.getName(), payerAccount.getName()));
         return airTicket;
     }
@@ -68,5 +79,4 @@ public class InterfaceWebServiceImpl implements InterfacetWebService {
     public void cancelFlight(Long identifier) throws UnknownAirTicketException {
         bookingService.cancelFlight(identifier);
     }
-    
 }

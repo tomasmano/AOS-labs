@@ -28,13 +28,14 @@ public class PrintingServiceImpl implements PrintingService {
 
     private File writeAirTicket(AirTicket ticket, User user) {
         Flight flight = ticket.getFlight();
-        String data = "Dear "+user.getFirstName()+" "+user.getLastName()+" \n Here is your ticket: "
-                + "From: "+flight.getSource()+
-                ", to: "+flight.getTarget()+
-                " , departure: "+flight.getFlightTime()+
-                " , seat number: "+ticket.getSeatNumber()+
-                " price: "+flight.getPrice()+
-                ". \n Thank you for the purchase.";
+        String data = "Dear "+user.getFirstName()+", \n\nHere is your ticket: "
+                + "\n\n   Air ticket number: #"+ticket.getId() +" (this is usefull when you want to f. e. cancell your flight) "
+                + "\n   From: "+flight.getSource()+
+                ", \n   to: "+flight.getTarget()+
+                " , \n   departure: "+flight.getFlightTime()+
+                " , \n   seat number: "+ticket.getSeatNumber()+
+                " \n   price: "+flight.getPrice()+
+                ". \n\nThank you for your purchase.";
         File file = null;
         PrintWriter out = null;
         try {

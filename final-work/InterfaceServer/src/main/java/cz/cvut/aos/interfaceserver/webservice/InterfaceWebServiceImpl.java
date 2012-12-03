@@ -10,7 +10,9 @@ import cz.cvut.aos.interfaceserver.service.PaymentService;
 import cz.cvut.aos.interfaceserver.service.PrintingService;
 import cz.cvut.aos.interfaceserver.service.exception.FlightCapacityExceededException;
 import cz.cvut.aos.interfaceserver.service.exception.PrintingException;
+import cz.cvut.aos.interfaceserver.service.exception.SeatNotAvailable;
 import cz.cvut.aos.interfaceserver.service.exception.UnknownAccountException;
+import cz.cvut.aos.interfaceserver.service.exception.UnknownAirTicketException;
 import java.util.List;
 import javax.jws.WebService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,10 +45,28 @@ public class InterfaceWebServiceImpl implements InterfacetWebService {
     }
 
     @Override
-    public AirTicketCopy bookFlight(Long code, Long payer, Long payee) throws UnknownAccountException, FlightCapacityExceededException, PrintingException {
-        Account payerAccount = paymentService.getAccountDetails(payer);
+    public AirTicket bookFlight(Long code, Long payer, Long payee) throws UnknownAccountException, FlightCapacityExceededException {
         AirTicket airTicket = bookingService.bookFlight(code);
         paymentService.payWithBankAccount(payer, payee, airTicket.getFlight().getPrice());
-        return printingService.printAirTicket(airTicket, new User(payerAccount.getName(), payerAccount.getName()));
+//        return printingService.printAirTicket(airTicket, new User(payerAccount.getName(), payerAccount.getName()));
+        return airTicket;
     }
+
+    @Override
+    public AirTicketCopy printAirTicket(Long identifier, Long payer) throws PrintingException, UnknownAirTicketException, UnknownAccountException {
+        AirTicket ticket = bookingService.findAirTicket(identifier);
+        Account payerAccount = paymentService.getAccountDetails(payer);
+        return printingService.printAirTicket(ticket, new User(payerAccount.getName(), payerAccount.getName()));
+    }
+
+    @Override
+    public AirTicket changeSeat(Long identifier, int seatNumber) throws SeatNotAvailable, UnknownAirTicketException {
+        return bookingService.changeSeat(identifier, seatNumber);
+    }
+
+    @Override
+    public void cancelFlight(Long identifier) throws UnknownAirTicketException {
+        bookingService.cancelFlight(identifier);
+    }
+    
 }

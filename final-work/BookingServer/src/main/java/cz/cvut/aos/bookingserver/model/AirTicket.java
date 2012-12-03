@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PreRemove;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -33,6 +34,12 @@ public class AirTicket implements Persistable {
 
     public AirTicket(int seatNumber) {
         this.seatNumber = seatNumber;
+    }
+    
+    @PreRemove
+    private void notifyFlight(){
+        flight.getAirTickets().remove(this);
+        flight.setCapacity(flight.getCapacity()+1);
     }
 
     @Override

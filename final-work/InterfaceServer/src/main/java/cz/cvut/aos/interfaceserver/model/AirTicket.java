@@ -1,5 +1,7 @@
 package cz.cvut.aos.interfaceserver.model;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 /**
  *
  * @author Tomas Mano <tomasmano@gmail.com>
@@ -11,6 +13,9 @@ public class AirTicket {
     private int seatNumber;
 
     private Flight flight;
+    
+    @XmlTransient
+    private Long ownerId;
 
     public AirTicket() {
     }
@@ -42,6 +47,14 @@ public class AirTicket {
 
     public void setFlight(Flight flight) {
         this.flight = flight;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     @Override

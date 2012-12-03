@@ -4,6 +4,8 @@ import cz.cvut.aos.bookingserver.model.AirTicket;
 import cz.cvut.aos.bookingserver.model.Flight;
 import cz.cvut.aos.bookingserver.service.BookingService;
 import cz.cvut.aos.bookingserver.service.exception.FlightCapacityExceededException;
+import cz.cvut.aos.bookingserver.service.exception.SeatNotAvailable;
+import cz.cvut.aos.bookingserver.service.exception.UnknownAirTicketException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,6 +32,11 @@ public class BookingServiceImpl implements cz.cvut.aos.bookingserver.webservice.
     }
 
     @Override
+    public AirTicket findAirTicket(Long airTicketCode) throws UnknownAirTicketException{
+        return bookingService.findAirTicket(airTicketCode);
+    }
+    
+    @Override
     public List<Flight> findFlightWithTime(String source, String target, String flightTime) {
         return bookingService.findFlightWithTime(source, target, flightTime);
     }
@@ -39,6 +46,16 @@ public class BookingServiceImpl implements cz.cvut.aos.bookingserver.webservice.
         return bookingService.bookFlight(code);
     }
 
+    @Override
+    public AirTicket changeSeat(Long airTicketCode, int seatNumber) throws SeatNotAvailable, UnknownAirTicketException {
+        return bookingService.changeSeat(airTicketCode, seatNumber);
+    }
+
+    @Override
+    public void cancelFlight(Long airTicketCode) throws UnknownAirTicketException {
+        bookingService.cancelFlight(airTicketCode);
+    }
+    
     @Override
     public int getFlightCapacity(Long code) {
         return bookingService.getFlightCapacity(code);

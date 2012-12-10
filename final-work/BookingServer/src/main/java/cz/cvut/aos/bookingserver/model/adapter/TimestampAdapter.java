@@ -4,7 +4,8 @@ import java.sql.Timestamp;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
- *
+ * TimeStamp apdapter to string.
+ * 
  * @author Tomas Mano <tomasmano@gmail.com>
  */
 public class TimestampAdapter extends XmlAdapter<String, Timestamp> {

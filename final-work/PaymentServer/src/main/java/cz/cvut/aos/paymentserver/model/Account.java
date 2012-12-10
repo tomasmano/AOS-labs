@@ -1,7 +1,8 @@
 package cz.cvut.aos.paymentserver.model;
 
 /**
- *
+ * Represents an account in the system.
+ * 
  * @author Tomas Mano <tomasmano@gmail.com>
  */
 public class Account {

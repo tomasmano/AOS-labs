@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
+ * Represents the flight in the system.
  *
  * @author Tomas Mano <tomasmano@gmail.com>
  */

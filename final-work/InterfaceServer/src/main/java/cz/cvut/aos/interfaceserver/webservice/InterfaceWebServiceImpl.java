@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
  */
 @Service("interfaceWebServiceBean")
 @WebService(endpointInterface = "cz.cvut.aos.interfaceserver.webservice.InterfaceWebService")
-public class InterfaceWebServiceImpl implements InterfacetWebService {
+public class InterfaceWebServiceImpl implements InterfaceWebService {
 
     @Autowired
     @Qualifier("bookingServiceClient")
@@ -53,8 +53,7 @@ public class InterfaceWebServiceImpl implements InterfacetWebService {
         String type = paymentInfo.getType();
         if (type.equals("bank")) {
             paymentService.payWithBankAccount(paymentInfo.getPayer(), paymentInfo.getPayer(), airTicket.getFlight().getPrice());
-        }
-        if (type.equals("credit")) {
+        } else if (type.equals("credit")) {
             paymentService.payWithCreditCard(paymentInfo.getPayer(), paymentInfo.getPayer(), airTicket.getFlight().getPrice());
         } else {
             throw new UnsupportedPaymentTypeException("Payment type ["+type+"] is not supported");

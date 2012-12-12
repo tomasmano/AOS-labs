@@ -19,7 +19,7 @@ import javax.jws.WebService;
  * @author Tomas Mano <tomasmano@gmail.com>
  */
 @WebService
-public interface InterfacetWebService {
+public interface InterfaceWebService {
 
     /**
      * Finds matching flights for given source, target and flight's time.

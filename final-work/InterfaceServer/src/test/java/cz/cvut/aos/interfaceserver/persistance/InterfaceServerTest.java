@@ -13,7 +13,7 @@ import cz.cvut.aos.interfaceserver.service.exception.SeatNotAvailable;
 import cz.cvut.aos.interfaceserver.service.exception.UnknownAccountException;
 import cz.cvut.aos.interfaceserver.service.exception.UnknownAirTicketException;
 import cz.cvut.aos.interfaceserver.service.exception.UnsupportedPaymentTypeException;
-import cz.cvut.aos.interfaceserver.webservice.InterfacetWebService;
+import cz.cvut.aos.interfaceserver.webservice.InterfaceWebService;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class InterfaceServerTest extends AbstractServiceTest {
     
     @Autowired
     @Qualifier("interfaceWebServiceBean")
-    InterfacetWebService interfacetWebService;
+    InterfaceWebService interfacetWebService;
     
     @Autowired
     @Qualifier("printingServiceClient")

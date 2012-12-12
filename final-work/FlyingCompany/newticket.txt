@@ -1,0 +1,12 @@
+Dear tomy, 
+
+Here is your ticket: 
+
+   Air ticket number: #193 (this is usefull when you want to f. e. cancell your flight) 
+   From: prague, 
+   to: berlin , 
+   departure: 2012-12-20 12:00:00.0 , 
+   seat number: 337 
+   price: 100.0. 
+
+Thank you for your purchase.

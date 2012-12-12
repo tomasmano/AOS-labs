@@ -9,7 +9,7 @@
     <import resource="classpath:META-INF/cxf/cxf.xml" />
     
     
-    <jaxws:endpoint id="interfaceService" implementor="#interfacetWebServiceBean" address="/InterfaceService" />
+    <jaxws:endpoint id="interfaceService" implementor="#interfaceWebServiceBean" address="/InterfaceService" />
         
     <jaxws:client id="bookingServiceClient" serviceClass="cz.cvut.aos.interfaceserver.service.BookingService" address="http://localhost:8081/BookingServer/BookingService"/> 
     <jaxws:client id="paymentServiceClient" serviceClass="cz.cvut.aos.interfaceserver.service.PaymentService" address="http://localhost:8081/PaymentServer/PaymentService"/> 
